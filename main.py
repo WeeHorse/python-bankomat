@@ -4,7 +4,7 @@ from card import Card
 
 def main():
     bankomat = Bankomat()
-    account = Account()
+    account = Account("Benjamin", "Berglund", "700109-2456")
     card = Card(account)
 
     bankomat.insert_card(card)
