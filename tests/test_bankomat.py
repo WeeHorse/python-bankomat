@@ -8,12 +8,12 @@ def test_insert_card():
     account = Account("Benjamin", "Berglund", "700109-2456")
     card = Card(account)
     result = bankomat.insert_card(card)
-    assert isinstance(result, Card)
+    assert result == True
 
 def test_eject_card():
     bankomat = Bankomat()
     account = Account("Benjamin", "Berglund", "700109-2456")
     card = Card(account)
     bankomat.insert_card(card)
-    bankomat.eject_card()
-    assert not isinstance(bankomat.card, Card)
+    result = bankomat.eject_card()
+    assert result == None
