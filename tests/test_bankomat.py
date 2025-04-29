@@ -17,3 +17,53 @@ def test_eject_card():
     bankomat.insert_card(card)
     result = bankomat.eject_card()
     assert result == None
+
+def test_enter_invalid_pin():
+    bankomat = Bankomat()
+    account = Account("Benjamin", "Berglund", "700109-2456")
+    card = Card(account)
+    bankomat.insert_card(card)
+    result = bankomat.enter_pin("1234")
+    assert result == False
+
+
+def test_enter_valid_pin():
+    bankomat = Bankomat()
+    account = Account("Benjamin", "Berglund", "700109-2456")
+    card = Card(account)
+    bankomat.insert_card(card)
+    result = bankomat.enter_pin("0123")
+    assert result == True
+
+# Example using a  fixture (helper method to avoid all this repetitive code)
+@pytest.fixture
+def banko():
+    bankomat = Bankomat()
+    account = Account("Benjamin", "Berglund", "700109-2456", 6000)
+    card = Card(account)
+    bankomat.insert_card(card)
+    bankomat.enter_pin("0123")
+    return bankomat
+
+def test_withdraw_all(banko):
+    result = banko.withdraw(6000)
+    assert result == 6000
+    assert banko.card.account.balance == 0
+
+def test_withdraw_half(banko):
+    result = banko.withdraw(3000)
+    assert result == 3000
+    assert banko.card.account.balance == 3000
+
+def test_overdraw_account(banko):
+    result = banko.withdraw(7000)
+    assert result == 0
+    assert banko.card.account.balance == 6000
+
+def test_overdraw_bankomat(banko):
+    # special, set lower amount left in machine
+    banko.machine_balance = 5000
+    result = banko.withdraw(6000)
+    assert result == 0
+    assert banko.machine_balance == 5000
+    assert banko.card.account.balance == 6000
