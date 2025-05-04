@@ -12,5 +12,9 @@ class Account:
         else:
             return 0
 
+    def deposit(self, amount):
+        self.balance += amount
+        return amount
+
     def get_balance(self):
         return self.balance

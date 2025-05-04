@@ -28,6 +28,14 @@ class Bankomat:
         self.msgs.append("Card removed, don't forget it!")
         return self.card
 
+    def init_card(self, pin):
+        result = self.card.set_pin(pin)
+        if result == True:
+            self.msgs.append("Pin set successfully!")
+        else:
+            self.msgs.append("The pin you entered is invalid!")
+        return result
+
     def enter_pin(self, pin):
         if(self.card == None):
             self.msgs.append("no card inserted")

@@ -18,11 +18,20 @@ def test_eject_card():
     result = bankomat.eject_card()
     assert result == None
 
+def test_init_card():
+    bankomat = Bankomat()
+    account = Account("Benjamin", "Berglund", "700109-2456")
+    card = Card(account)
+    bankomat.insert_card(card)
+    result = bankomat.init_card("0123")
+    assert result == True
+
 def test_enter_invalid_pin():
     bankomat = Bankomat()
     account = Account("Benjamin", "Berglund", "700109-2456")
     card = Card(account)
     bankomat.insert_card(card)
+    bankomat.init_card("0123")
     result = bankomat.enter_pin("1234")
     assert result == False
 
@@ -32,6 +41,7 @@ def test_enter_valid_pin():
     account = Account("Benjamin", "Berglund", "700109-2456")
     card = Card(account)
     bankomat.insert_card(card)
+    bankomat.init_card("0123")
     result = bankomat.enter_pin("0123")
     assert result == True
 
@@ -46,6 +56,7 @@ def test_withdraw_1000():
     account = Account("Benjamin", "Berglund", "700109-2456", initial_account_balance)
     card = Card(account)
     bankomat.insert_card(card)
+    bankomat.init_card("0123")
     bankomat.enter_pin("0123")
     # test
     result = bankomat.withdraw(withdrawal)
@@ -61,6 +72,7 @@ def banko():
     account = Account("Benjamin", "Berglund", "700109-2456", 6000)
     card = Card(account)
     bankomat.insert_card(card)
+    bankomat.init_card("0123")
     bankomat.enter_pin("0123")
     return bankomat
 

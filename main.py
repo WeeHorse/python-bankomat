@@ -10,6 +10,12 @@ def main():
     bankomat.insert_card(card)
     print(bankomat.get_message())
 
+    bankomat.init_card("012")
+    print(bankomat.get_message())
+
+    bankomat.init_card("0123")
+    print(bankomat.get_message())
+
     bankomat.enter_pin("1234")
     print(bankomat.get_message())
 
