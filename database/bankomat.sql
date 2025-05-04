@@ -1,0 +1,9 @@
+CREATE DATABASE bankomat;
+CREATE TABLE IF NOT EXISTS accounts (
+    id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    ssn TEXT NOT NULL UNIQUE,
+    balance INTEGER NOT NULL DEFAULT 0,
+    account_nr TEXT NOT NULL UNIQUE
+);
