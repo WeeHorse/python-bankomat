@@ -49,6 +49,13 @@ def main():
     bankomat.eject_card()
     print(bankomat.get_message())
 
+    bankomat.insert_card(card)
+    print(bankomat.get_message())
+    bankomat.add_cash(100,10)
+    bankomat.add_cash(200, 5)
+    bankomat.add_cash(500, 2)
+    print(bankomat.cash_balance())
+
 if __name__ == "__main__":
     main()
 

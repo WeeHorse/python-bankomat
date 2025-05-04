@@ -8,6 +8,17 @@ class Bankomat:
         self.valid_card = False
         self.machine_balance = 11000
         self.msgs = []
+        self.cash = {
+            100:0,
+            200:0,
+            500:0
+        }
+
+    def cash_balance(self):
+        return sum(denom * count for denom, count in self.cash.items())
+
+    def add_cash(self,denomination,amount):
+        self.cash[denomination] = self.cash[denomination] + amount
 
     def get_message(self):
         msg = ""
