@@ -6,7 +6,6 @@ class Bankomat:
         self.card_inserted = False
         self.card = None
         self.valid_card = False
-        self.machine_balance = 11000
         self.msgs = []
         self.cash = {
             100:0,
@@ -14,11 +13,11 @@ class Bankomat:
             500:0
         }
 
-    def cash_balance(self):
-        return sum(denom * count for denom, count in self.cash.items())
+    def machine_balance(self):
+        return sum(bill * count for bill, count in self.cash.items())
 
-    def add_cash(self,denomination,amount):
-        self.cash[denomination] = self.cash[denomination] + amount
+    def add_cash(self, bill, amount):
+        self.cash[bill] = self.cash[bill] + amount
 
     def get_message(self):
         msg = ""
@@ -60,6 +59,29 @@ class Bankomat:
             self.valid_card = False
             return self.valid_card
 
+    def try_withdraw_bills(self, amount):
+        result = {}
+        remaining = amount
+
+        # Create a temporary copy so we don't change original state unless successful
+        temp_money = self.cash.copy()
+
+        for bill in sorted(temp_money.keys(), reverse=True):
+            max_needed = remaining // bill
+            num_to_use = min(max_needed, temp_money[bill])
+            if num_to_use > 0:
+                result[bill] = num_to_use
+                remaining -= bill * num_to_use
+                temp_money[bill] -= num_to_use
+
+        if remaining == 0:
+            # Commit the withdrawal to the real money inventory
+            for bill, count in result.items():
+                self.cash[bill] -= count
+            return result
+        else:
+            return None
+
     def withdraw(self, amount):
         if (self.card == None):
             self.msgs.append("No card inserted")
@@ -67,13 +89,13 @@ class Bankomat:
         elif (self.valid_card == False):
             self.msgs.append("Your card is invalid")
             return None
-        elif amount > 0 and amount <= self.machine_balance and amount <= self.card.account.get_balance():
-            self.machine_balance -= amount
+        # Note that bills are withdrawn from the machine in the last case in the elif condition, if successful
+        elif amount > 0 and amount <= self.machine_balance() and amount <= self.card.account.get_balance() and self.try_withdraw_bills(amount):
             self.card.account.withdraw(amount)
             self.msgs.append(f"Withdrawing {amount}")
             return amount
         else:
-            if amount > self.machine_balance:
+            if amount > self.machine_balance():
                 self.msgs.append("Machine has insufficient funds")
             elif amount > self.card.account.get_balance():
                 self.msgs.append("Card has insufficient funds")

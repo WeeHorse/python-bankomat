@@ -4,7 +4,11 @@ from card import Card
 
 def main():
     bankomat = Bankomat()
-    account = Account("Benjamin", "Berglund", "700109-2456", 6000)
+    bankomat.add_cash(100,50)
+    bankomat.add_cash(200, 20)
+    bankomat.add_cash(500, 4)
+    account = Account("Benjamin", "Berglund", "700109-2456")
+    account.deposit(6000)
     card = Card(account)
 
     bankomat.insert_card(card)
@@ -46,15 +50,10 @@ def main():
     bankomat.withdraw(1000)
     print(bankomat.get_message())
 
+    print(bankomat.machine_balance())
+
     bankomat.eject_card()
     print(bankomat.get_message())
-
-    bankomat.insert_card(card)
-    print(bankomat.get_message())
-    bankomat.add_cash(100,10)
-    bankomat.add_cash(200, 5)
-    bankomat.add_cash(500, 2)
-    print(bankomat.cash_balance())
 
 if __name__ == "__main__":
     main()
