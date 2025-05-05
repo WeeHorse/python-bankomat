@@ -1,13 +1,19 @@
 from bankomat import Bankomat
 from account import Account
 from card import Card
+from db_model import DBModel
 
 def main():
+    # database connection
+    db = DBModel.from_dsn("dbname=bankomat user=postgres password=root host=localhost port=5432")
+    conn = db.get_connection()
+
+    # init
     bankomat = Bankomat()
     bankomat.add_cash(100,50)
     bankomat.add_cash(200, 20)
     bankomat.add_cash(500, 4)
-    account = Account.create("Benjamin", "Berglund", "700109-2456")
+    account = Account.create("Benjamin", "Berglund", "700109-2456", conn)
     account.deposit(6000)
     card = Card(account)
 
