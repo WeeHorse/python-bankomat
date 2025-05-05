@@ -7,6 +7,8 @@ def main():
     bankomat.add_cash(100,50)
     bankomat.add_cash(200, 20)
     bankomat.add_cash(500, 4)
+    # bankomat._cash[80] = 10
+    # bankomat.add_cash(80, 4)
     account = Account("Benjamin", "Berglund", "700109-2456")
     account.deposit(6000)
     print(account._balance)

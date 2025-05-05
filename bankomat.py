@@ -7,17 +7,17 @@ class Bankomat:
         self.card = None
         self.valid_card = False
         self.msgs = []
-        self.cash = {
+        self._cash = {
             100:0,
             200:0,
             500:0
         }
 
     def machine_balance(self):
-        return sum(bill * count for bill, count in self.cash.items())
+        return sum(bill * count for bill, count in self._cash.items())
 
     def add_cash(self, bill, amount):
-        self.cash[bill] = self.cash[bill] + amount
+        self._cash[bill] = self._cash[bill] + amount
 
     def get_message(self):
         msg = ""
@@ -64,7 +64,7 @@ class Bankomat:
         remaining = amount
 
         # Create a temporary copy so we don't change original state unless successful
-        temp_money = self.cash.copy()
+        temp_money = self._cash.copy()
 
         for bill in sorted(temp_money.keys(), reverse=True):
             max_needed = remaining // bill
@@ -77,7 +77,7 @@ class Bankomat:
         if remaining == 0:
             # Commit the withdrawal to the real money inventory
             for bill, count in result.items():
-                self.cash[bill] -= count
+                self._cash[bill] -= count
             return result
         else:
             return None
