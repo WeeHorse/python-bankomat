@@ -7,7 +7,7 @@ def main():
     bankomat.add_cash(100,50)
     bankomat.add_cash(200, 20)
     bankomat.add_cash(500, 4)
-    account = Account.create("Benjamin", "Berglund", "700109-2456")
+    account = Account.create("Benjamin", "Berglund", "19700109-2456")
     account.deposit(6000)
     card = Card(account)
 

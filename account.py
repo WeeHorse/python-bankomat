@@ -14,6 +14,7 @@ class Account(BaseModel):
 
     @classmethod
     def create(cls, first_name: str, last_name: str, ssn: str) -> "Account":
+        # add validation logic... or use @field validator methods
         return cls(first_name=first_name, last_name=last_name, ssn=ssn)
 
     @field_validator('balance')
