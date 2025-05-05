@@ -30,7 +30,7 @@ class Account(BaseModel):
 
     @classmethod
     def load_by_account_nr(cls, account_nr: str) -> "Account":
-        with conn.cursor() as cur:
+        with cls.conn.cursor() as cur:
             cur.execute("SELECT first_name, last_name, ssn, balance, account_nr FROM accounts WHERE account_nr = %s", (account_nr,))
             row = cur.fetchone()
             if row:

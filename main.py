@@ -13,9 +13,11 @@ def main():
     bankomat.add_cash(100,50)
     bankomat.add_cash(200, 20)
     bankomat.add_cash(500, 4)
-    account = Account.create("Benjamin", "Berglund", "700109-2456", conn)
+    account = Account.create("Bob", "Berglund", "710109-2456", conn)
     account.deposit(6000)
     card = Card(account)
+
+    print(account.get_balance())
 
     bankomat.insert_card(card)
     print(bankomat.get_message())
@@ -35,11 +37,15 @@ def main():
     bankomat.withdraw(15000)
     print(bankomat.get_message())
 
+    print(account.get_balance())
+
     bankomat.withdraw(8000)
     print(bankomat.get_message())
 
     bankomat.withdraw(3000)
     print(bankomat.get_message())
+
+    print(account.get_balance())
 
     bankomat.eject_card()
     print(bankomat.get_message())
@@ -53,7 +59,7 @@ def main():
     bankomat.enter_pin("0123")
     print(bankomat.get_message())
 
-    bankomat.withdraw(1000)
+    bankomat.withdraw(3000)
     print(bankomat.get_message())
 
     print(bankomat.machine_balance())
