@@ -9,6 +9,7 @@ def main():
     bankomat.add_cash(500, 4)
     account = Account("Benjamin", "Berglund", "700109-2456")
     account.deposit(6000)
+    print(account._balance)
     card = Card(account)
 
     bankomat.insert_card(card)

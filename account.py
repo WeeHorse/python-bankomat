@@ -3,7 +3,7 @@ import random
 
 class Account:
     def __init__(self, first_name, last_name, ssn):
-        self.balance = 0
+        self._balance = 0
         self.first_name = first_name
         self.last_name = last_name
         self.ssn = ssn
@@ -16,15 +16,15 @@ class Account:
         return self.account_nr
 
     def withdraw(self, amount):
-        if amount > 0 and self.balance >= amount:
-            self.balance -= amount
+        if amount > 0 and self._balance >= amount:
+            self._balance -= amount
             return amount
         else:
             return 0
 
     def deposit(self, amount):
-        self.balance += amount
+        self._balance += amount
         return amount
 
     def get_balance(self):
-        return self.balance
+        return self._balance
