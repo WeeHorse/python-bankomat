@@ -5,7 +5,7 @@ from db_model import DBModel
 
 def main():
     # database connection
-    db = DBModel.from_dsn("dbname=bankomat user=postgres password=root host=localhost port=5432")
+    db = DBModel.from_dsn("dbname=bankomat user=postgres password=postgres host=localhost port=5432") # root
     conn = db.get_connection()
 
     # init
